@@ -5,14 +5,14 @@ Supabase 의 상품 테이블(`supabase_products.sql`)을 조회 · 검색 · �
 
 - 로그인해야 화면이 열린다 (Supabase Auth, 이메일 + 비밀번호)
 - 추가 · 삭제는 `admins` 테이블에 등록된 이메일만 가능 (`../supabase_admin_auth.sql`)
-- 브라우저에는 공개용 publishable(anon) 키만 들어간다. service_role / secret 키는 쓰지 않는다
+- 브라우저에는 공개용 anon 키만 들어간다. service_role 키는 RLS 를 무시하므로 쓰지 않는다
 
 ## 환경 변수
 
 | 이름 | 값 |
 |---|---|
 | `VITE_SUPABASE_URL` | 프로젝트 URL (뒤에 `/rest/v1/` 이 붙어 있어도 됨) |
-| `VITE_SUPABASE_PUBLISHABLE_KEY` | publishable 키(`sb_publishable_...`) 또는 anon 키 |
+| `VITE_SUPABASE_ANON_KEY` | anon 키 (Legacy API Keys 탭의 anon public) |
 
 로컬은 `.env.local`, Vercel 은 Project Settings > Environment Variables 에 입력.
 값을 바꾸면 로컬은 개발 서버 재시작, Vercel 은 Redeploy 가 필요하다.
