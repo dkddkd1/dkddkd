@@ -1,23 +1,35 @@
-# 상품 관리 (로컬 전용)
+# 상품 관리
 
 Supabase 의 상품 테이블(`supabase_products.sql`)을 조회 · 검색 · 추가 · 삭제하는 React 앱.
-내 PC(127.0.0.1)에서만 열리며, Supabase 키는 개발 서버에만 있고 브라우저로 전달되지 않는다.
+로컬(`npm run dev`)과 Vercel 배포 모두 같은 코드로 동작한다.
 
-## 처음 한 번
+- 로그인해야 화면이 열린다 (Supabase Auth, 이메일 + 비밀번호)
+- 추가 · 삭제는 `admins` 테이블에 등록된 이메일만 가능 (`../supabase_admin_auth.sql`)
+- 브라우저에는 공개용 publishable(anon) 키만 들어간다. service_role / secret 키는 쓰지 않는다
 
-1. Node.js LTS 설치 — https://nodejs.org (설치 후 터미널을 새로 열기)
-2. `.env.example` 을 복사해 `.env.local` 로 저장하고 두 값을 채우기
-   - `SUPABASE_URL` — 대시보드 > Project Settings > API 의 Project URL
-   - `SUPABASE_SECRET_KEY` — service_role 키 또는 secret 키(`sb_secret_...`)
-3. 이 폴더에서 `npm install`
+## 환경 변수
 
-## 실행
+| 이름 | 값 |
+|---|---|
+| `VITE_SUPABASE_URL` | 프로젝트 URL (뒤에 `/rest/v1/` 이 붙어 있어도 됨) |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | publishable 키(`sb_publishable_...`) 또는 anon 키 |
+
+로컬은 `.env.local`, Vercel 은 Project Settings > Environment Variables 에 입력.
+값을 바꾸면 로컬은 개발 서버 재시작, Vercel 은 Redeploy 가 필요하다.
+
+## 로컬 실행
 
 ```
+npm install
 npm run dev
 ```
 
-브라우저에서 http://127.0.0.1:5173 접속. 종료는 터미널에서 Ctrl+C
+PowerShell 에서 스크립트 실행 오류가 나면 `npm.cmd run dev`. 접속: http://127.0.0.1:5173
+
+## Vercel
+
+GitHub 저장소를 Vercel 프로젝트에 연결하면 push 할 때마다 자동 배포된다.
+Framework 는 Vite 로 자동 인식 (Build `npm run build`, Output `dist`).
 
 ## 기능
 
@@ -26,8 +38,3 @@ npm run dev
 - 필터: 알레르기 유발물질 있음 / 교차오염 주의 있음 (`없음` · `글루텐 없음` · `미확인` 은 유발물질로 보지 않음)
 - 추가: 상품 + 원재료 · 보관 · 주의사항 줄을 함께 입력. 하위 데이터 저장이 실패하면 상품도 지워 되돌림
 - 삭제: 확인 후 삭제. 원재료 · 보관 · 주의사항도 함께 삭제됨(되돌릴 수 없음)
-
-## 주의
-
-- `.env.local` 의 키는 DB 전체 권한이 있으므로 공유 · 커밋하지 않기 (`.gitignore` 에 포함됨)
-- `npm run dev` 로만 동작함 (빌드한 정적 파일에는 키를 붙여 주는 프록시가 없음)
