@@ -6,7 +6,23 @@
     <title>상품 관리</title>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- 이 문구가 계속 보이면 JavaScript 가 실행되지 않은 것 -->
+    <div id="root"><p style="padding: 16px; font-family: sans-serif; color: #6b7280">불러오는 중…</p></div>
+    <noscript>이 페이지는 JavaScript 가 필요합니다.</noscript>
+    <script>
+      // 앱이 뜨기 전에 난 오류(스크립트 파일 로드 실패 포함)를 화면에 표시
+      window.addEventListener(
+        'error',
+        function (e) {
+          var root = document.getElementById('root')
+          if (!root || root.textContent.indexOf('불러오는 중') === -1) return
+          var what = e.message || '파일을 불러오지 못함: ' + ((e.target && (e.target.src || e.target.href)) || '')
+          root.innerHTML = '<pre style="margin:16px;white-space:pre-wrap;color:#b42318"></pre>'
+          root.firstChild.textContent = '화면을 그리는 중 오류가 났습니다\n\n' + what
+        },
+        true,
+      )
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
