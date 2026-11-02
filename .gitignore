@@ -1,0 +1,5 @@
+node_modules
+dist
+# Supabase 키가 들어 있으므로 절대 커밋하지 않음
+.env.local
+.env.*.local
