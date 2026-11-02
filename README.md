@@ -3,8 +3,8 @@
 Supabase 의 상품 테이블(`supabase_products.sql`)을 조회 · 검색 · 추가 · 삭제하는 React 앱.
 로컬(`npm run dev`)과 Vercel 배포 모두 같은 코드로 동작한다.
 
-- 로그인해야 화면이 열린다 (Supabase Auth, 이메일 + 비밀번호)
-- 추가 · 삭제는 `admins` 테이블에 등록된 이메일만 가능 (`../supabase_admin_auth.sql`)
+- 로그인 없이 바로 화면이 열린다
+- 추가 · 삭제는 누구나 가능 (`../supabase_public_write.sql` 의 RLS 정책). 주소를 아는 사람은 누구나 데이터를 지울 수 있다
 - 브라우저에는 공개용 anon 키만 들어간다. service_role 키는 RLS 를 무시하므로 쓰지 않는다
 
 ## 환경 변수

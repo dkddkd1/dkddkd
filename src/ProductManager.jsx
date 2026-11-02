@@ -5,7 +5,7 @@ import ProductList from './components/ProductList'
 import ProductDetail from './components/ProductDetail'
 import ProductForm from './components/ProductForm'
 
-export default function ProductManager({ email, onLogout }) {
+export default function ProductManager() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -71,8 +71,6 @@ export default function ProductManager({ email, onLogout }) {
         </select>
         <button onClick={load} disabled={loading}>새로고침</button>
         <button className="primary" onClick={() => setAdding(true)}>+ 상품 추가</button>
-        <span className="muted user">{email}</span>
-        <button onClick={onLogout}>로그아웃</button>
       </header>
 
       {error && <p className="error">{error}</p>}

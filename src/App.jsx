@@ -1,18 +1,8 @@
-import { useEffect, useState } from 'react'
-import { configError, supabase } from './supabase'
-import Login from './components/Login'
+import { configError } from './supabase'
 import ProductManager from './ProductManager'
 
+// 로그인 없이 바로 상품 관리 화면을 연다 (추가 · 삭제 권한은 supabase_public_write.sql 의 RLS 정책)
 export default function App() {
-  const [session, setSession] = useState(undefined) // undefined = 로그인 상태 확인 중
-
-  useEffect(() => {
-    if (!supabase) return
-    supabase.auth.getSession().then(({ data }) => setSession(data.session))
-    const { data } = supabase.auth.onAuthStateChange((_event, next) => setSession(next))
-    return () => data.subscription.unsubscribe()
-  }, [])
-
   if (configError) {
     return (
       <div className="center">
@@ -20,8 +10,5 @@ export default function App() {
       </div>
     )
   }
-  if (session === undefined) return <div className="center muted">확인 중…</div>
-  if (!session) return <Login />
-
-  return <ProductManager email={session.user.email} onLogout={() => supabase.auth.signOut()} />
+  return <ProductManager />
 }
